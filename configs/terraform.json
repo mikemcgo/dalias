@@ -1,0 +1,23 @@
+{
+  "base": {
+    "mounts": [
+      {
+        "target": "/tmp",
+        "source": "$PWD",
+        "type": "bind"
+      },
+      {
+        "target": "/root",
+        "source": "$HOME",
+        "type": "bind"
+      }
+    ],
+    "working_dir": "/tmp"
+  },
+  "terraform": {
+    "image": "hashicorp/terraform:0.12.29"
+  },
+  "busybox": {
+    "image": "busybox"
+  }
+}
