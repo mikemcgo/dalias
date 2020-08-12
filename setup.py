@@ -14,9 +14,9 @@ from setuptools import find_packages, setup, Command
 # Package meta-data.
 NAME = 'docker_alias'
 DESCRIPTION = 'bleepblorp'
-URL = 'https://github.com/me/myproject'
-EMAIL = 'me@example.com'
-AUTHOR = 'Awesome Soul'
+URL = 'https://github.com/mikemcgo/dalias'
+EMAIL = 'mikemcgo'
+AUTHOR = 'mikemcgo'
 REQUIRES_PYTHON = '>=3.7.0'
 VERSION = '0.1.0'
 
@@ -24,11 +24,6 @@ VERSION = '0.1.0'
 REQUIRED = [
     'docker', 'pyyaml'
 ]
-
-# What packages are optional?
-EXTRAS = {
-    # 'fancy feature': ['django'],
-}
 
 # The rest you shouldn't have to touch too much :)
 # ------------------------------------------------
@@ -112,7 +107,6 @@ setup(
             dalias=scripts.dalias:commander
         ''',
     install_requires=REQUIRED,
-    extras_require=EXTRAS,
     include_package_data=True,
     license='MIT',
     classifiers=[
