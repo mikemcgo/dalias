@@ -7,3 +7,5 @@ Add the following to your shell init script in order to start updating functions
 dalias > ~/.dalias/aliases.sh
 source ~/.dalises/aliases.sh
 ```
+
+Take a look in the `configs` directory for an example of a config file for generating bash functions

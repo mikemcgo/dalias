@@ -13,12 +13,21 @@
       }
     ],
     "workdir": "/tmp",
-    "rm": ""
+    "rm": "",
+    "interactive": "",
+    "tty": ""
   },
   "terraform": {
     "image": "hashicorp/terraform:0.12.29"
   },
   "busybox": {
     "image": "busybox"
+  },
+  "alpine": {
+    "image": "alpine"
+  },
+  "altalp": {
+    "image": "alpine",
+    "mounts": []
   }
 }
