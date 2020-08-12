@@ -1,4 +1,3 @@
-import docker
 import os
 import yaml
 
@@ -8,39 +7,38 @@ class Commander:
     def __init__(self, config_path):
         self._config = self._load_config(config_path)
 
-        self._client = docker.client.from_env()
-
     @staticmethod
     def _load_config(config_path):
         cfg_string = open(config_path, 'r').read()
-        for key, value in os.environ.items():
-            cfg_string = cfg_string.replace(f'${key.upper()}', value)
         try:
             cfg = yaml.safe_load(cfg_string)
         except yaml.YAMLError as e:
             raise CommanderError from e
         return cfg
 
-    def exec(self, cmd, args):
-        if cmd not in self._config:
-            raise CommanderError("Command not found")
+    def _gen_alias_configs(self):
+        base = self._config.pop('base')
+        aliases_cfgs = {}
+        for cmd, cfg in self._config.items():
+            config = dict(base)
+            config.update(cfg)
+            aliases_cfgs[cmd] = config
+        return aliases_cfgs
 
-        conf = self._config.get('base')
-        conf.update(self._config[cmd])
+    def _bash_function(self, args):
+        mounts = args.pop('mounts')
+        image = args.pop('image')
 
-        try:
-            c = self._client.containers.create(command=args, **conf)
+        arg_str = ' '.join([f'--{arg} {val}' for arg, val in args.items()])
+        arg_str = arg_str + ' ' + (' '.join('--mount type={type},target={target},source={source}'.format(**mount) for mount in mounts))
 
-            c.start()
-            rc = c.wait()
-            print(c.logs().decode("utf-8"))
+        return f"docker run {arg_str} {image}"
 
-            # TODO: MAKE THIS OPTIONAL
-            c.remove()
-            self._client.close()
-        except docker.errors.DockerException as e:
-            raise CommanderError from e
-        return rc.get('StatusCode', 1)
+    def gen_alises(self):
+        aliases = {}
+        for cmd, args in self._gen_alias_configs().items():
+            aliases[cmd] = self._bash_function(args)
+        return aliases
 
 class CommanderError(Exception):
     pass

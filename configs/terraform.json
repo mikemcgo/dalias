@@ -12,7 +12,8 @@
         "type": "bind"
       }
     ],
-    "working_dir": "/tmp"
+    "workdir": "/tmp",
+    "rm": ""
   },
   "terraform": {
     "image": "hashicorp/terraform:0.12.29"
