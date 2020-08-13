@@ -124,5 +124,3 @@ setup(
         'upload': UploadCommand,
     },
 )
-
-os.mkdir("~/.dalias")
