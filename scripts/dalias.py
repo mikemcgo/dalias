@@ -6,7 +6,7 @@ from dalias.commander import Commander
 
 def commander():
     config_path = os.environ.get('DALIAS_CONFIG_PATH',
-                                 '~/dalias/config.json')
+                                 '~/.dalias/config.json')
     config_path = os.path.expanduser(config_path)
 
     if not os.path.exists(config_path):
