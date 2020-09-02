@@ -30,7 +30,7 @@ class Commander:
         image = args.pop('image')
 
         arg_str = ' '.join([f'--{arg} {val}' for arg, val in args.items()])
-        arg_str = arg_str + ' ' + (' '.join('--mount type={type},target={target},source={source}'.format(**mount) for mount in mounts))
+        arg_str = arg_str + ' ' + (' '.join('--volume {source}:{target}'.format(**mount) for mount in mounts))
 
         return f"docker run {arg_str} {image}"
 
